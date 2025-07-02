@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="app-title">My To-Do List</h1>
+            <p class="app-subtitle">Stay organized and productive</p>
+        </header>
+
+        <main class="main-content">
+            <form class="add-task-form" id="addTaskForm">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        class="task-input" 
+                        placeholder="What needs to be done?"
+                        required
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="add-button">
+                        <span class="add-icon">+</span>
+                        Add Task
+                    </button>
+                </div>
+            </form>
+
+            <div class="tasks-section">
+                <div class="tasks-header">
+                    <h2 class="tasks-title">Tasks</h2>
+                    <div class="tasks-count">
+                        <span id="taskCount">0</span> tasks
+                    </div>
+                </div>
+
+                <ul class="tasks-list" id="tasksList">
+                    <!-- Tasks will be dynamically added here -->
+                </ul>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">✓</div>
+                    <h3>All caught up!</h3>
+                    <p>Add a new task above to get started.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
