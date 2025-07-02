@@ -72,9 +72,15 @@ class TodoApp {
     toggleTask(taskId) {
         const task = this.tasks.find(t => t.id === taskId);
         if (task) {
+            const wasCompleted = task.completed;
             task.completed = !task.completed;
             this.saveTasks();
             this.render();
+            
+            // Check if all tasks are now completed
+            if (!wasCompleted && task.completed && this.areAllTasksCompleted()) {
+                this.celebrate();
+            }
         }
     }
 
@@ -228,6 +234,72 @@ class TodoApp {
         const pending = total - completed;
         
         return { total, completed, pending };
+    }
+
+    /**
+     * Check if all tasks are completed
+     */
+    areAllTasksCompleted() {
+        return this.tasks.length > 0 && this.tasks.every(task => task.completed);
+    }
+
+    /**
+     * Trigger celebration animation
+     */
+    celebrate() {
+        // Create celebration overlay
+        const celebrationOverlay = document.createElement('div');
+        celebrationOverlay.className = 'celebration-overlay';
+        celebrationOverlay.innerHTML = `
+            <div class="celebration-content">
+                <div class="celebration-emoji">🎉</div>
+                <h2 class="celebration-title">Congratulations!</h2>
+                <p class="celebration-message">You've completed all your tasks!</p>
+            </div>
+        `;
+        
+        document.body.appendChild(celebrationOverlay);
+        
+        // Create confetti
+        this.createConfetti();
+        
+        // Add celebration class to container
+        const container = document.querySelector('.container');
+        container.classList.add('celebrating');
+        
+        // Remove celebration after animation
+        setTimeout(() => {
+            if (celebrationOverlay.parentNode) {
+                celebrationOverlay.remove();
+            }
+            container.classList.remove('celebrating');
+        }, 4000);
+    }
+
+    /**
+     * Create confetti animation
+     */
+    createConfetti() {
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
+        const confettiCount = 50;
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+                if (confetti.parentNode) {
+                    confetti.remove();
+                }
+            }, 5000);
+        }
     }
 }
 
